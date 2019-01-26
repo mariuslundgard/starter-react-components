@@ -1,0 +1,46 @@
+{
+  "name": "starter-react-components",
+  "version": "0.0.1-alpha.0",
+  "description": "",
+  "main": "lib/cjs/index.js",
+  "module": "lib/es/index.js",
+  "scripts": {
+    "build": "npm run clean && npm run tsc-cjs && npm run tsc-es && npm run postcss-cjs && npm run postcss-es",
+    "clean": "rimraf lib",
+    "dev": "nodemon -e css,js,ts,tsx dev/server.js",
+    "postcss-cjs": "postcss src/**/*.css --base src --dir lib/cjs/",
+    "postcss-es": "postcss src/**/*.css --base src --dir lib/es/",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc-cjs": "tsc -p tsconfig.cjs.json",
+    "tsc-es": "tsc -p tsconfig.es.json"
+  },
+  "author": "Marius Lundgård <studio@mariuslundgard.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "^16.7.21",
+    "@types/react-dom": "^16.0.11",
+    "css-loader": "^2.1.0",
+    "css-modules-require-hook": "^4.2.3",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.9",
+    "postcss-cli": "^6.1.1",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.5.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "rimraf": "^2.6.3",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.3",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0",
+    "webpack-dev-middleware": "^3.5.1",
+    "webpack-hot-middleware": "^2.24.3"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0"
+  }
+}
