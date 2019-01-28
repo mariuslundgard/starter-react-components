@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "sourceMap": true,
+    "resolveJsonModule": true,
     "target": "es5",
     "moduleResolution": "node",
     "module": "commonjs",
@@ -18,5 +19,5 @@
     "strict": true,
     "strictNullChecks": true
   },
-  "include": ["dev/*", "src/index.ts", "typings/*"]
+  "include": ["dev/*", "src/index.ts", "ts/types.d.ts"]
 }

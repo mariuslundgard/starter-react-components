@@ -1,4 +1,22 @@
-.root {
+@import "../vars/default.css";
+
+.base {
+  /* Reset Firefox */
+  @nest &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  background: none;
   appearance: none;
   font: inherit;
+  border: none;
+  margin: 0;
+  padding: 0.5em 1em;
+  border-radius: var(--border-radius-medium);
+}
+
+.root {
+  composes: base;
+  background: var(--color-red);
 }

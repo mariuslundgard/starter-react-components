@@ -1,39 +1,47 @@
-const path = require('path')
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  context: path.resolve(__dirname, '..'),
-  mode: 'development',
+  context: path.resolve(__dirname, ".."),
+  mode: "development",
+  devtool: "eval-source-map",
   entry: {
-    main: './dev/client.tsx'
+    main: ["webpack-hot-middleware/client?reload=true", "./dev/client.tsx"]
   },
   output: {
-    publicPath: '/'
+    publicPath: "/"
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: "ts-loader",
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
+        test: /\.module\.css$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: true,
               importLoaders: 1,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
+              localIdentName: "[name]__[local]___[hash:base64:5]"
             }
           },
-          'postcss-loader'
+          "postcss-loader"
         ]
+      },
+      {
+        // Match "*.css" that is not "*.module.css"
+        test: /^(?![.*]\.module)([^.]+)\.css$/,
+        use: ["style-loader", "css-loader", "postcss-loader"]
       }
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
-  }
-}
+    extensions: [".tsx", ".ts", ".js"]
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin()]
+};

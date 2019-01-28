@@ -5,8 +5,8 @@
     "moduleResolution": "node",
     "module": "es6",
     "lib": ["dom", "es6"],
-    "rootDir": "src",
-    "outDir": "lib/es",
+    "rootDir": "../src",
+    "outDir": "../lib/es",
     "jsx": "react",
     "declaration": true,
     "downlevelIteration": true,
@@ -19,5 +19,5 @@
     "strict": true,
     "strictNullChecks": true
   },
-  "include": ["typings/*", "src/index.ts"]
+  "include": ["types.d.ts", "../src/index.ts"]
 }

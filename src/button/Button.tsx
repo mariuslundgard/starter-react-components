@@ -1,13 +1,13 @@
-import * as React from 'react'
+import * as React from "react";
 
-import * as styles from './Button.module.css'
+import * as styles from "./Button.module.css";
 
 interface Props {
-  children: any
+  children: any;
 }
 
 function Button(props: Props) {
-  return <button className={styles.root}>{props.children}</button>
+  return <button className={styles.root}>{props.children}</button>;
 }
 
-export default Button
+export default Button;

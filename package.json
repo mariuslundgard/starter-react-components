@@ -7,18 +7,19 @@
   "scripts": {
     "build": "npm run clean && npm run tsc-cjs && npm run tsc-es && npm run postcss-cjs && npm run postcss-es",
     "clean": "rimraf lib",
-    "dev": "nodemon -e css,js,ts,tsx dev/server.js",
+    "dev": "node dev/server.js",
     "postcss-cjs": "postcss src/**/*.css --base src --dir lib/cjs/",
     "postcss-es": "postcss src/**/*.css --base src --dir lib/es/",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc-cjs": "tsc -p tsconfig.cjs.json",
-    "tsc-es": "tsc -p tsconfig.es.json"
+    "tsc-cjs": "tsc -p ts/tsconfig.cjs.json",
+    "tsc-es": "tsc -p ts/tsconfig.es.json"
   },
   "author": "Marius Lundgård <studio@mariuslundgard.com>",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@types/express": "^4.16.1",
     "@types/react": "^16.7.21",
     "@types/react-dom": "^16.0.11",
     "css-loader": "^2.1.0",
@@ -33,6 +34,8 @@
     "react-dom": "^16.7.0",
     "rimraf": "^2.6.3",
     "style-loader": "^0.23.1",
+    "stylelint": "^9.10.1",
+    "stylelint-config-standard": "^18.2.0",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.0.2",
     "typescript": "^3.2.4",
