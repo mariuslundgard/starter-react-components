@@ -5,6 +5,7 @@ html {
 
 body {
   margin: 0;
+  background: color-mod(var(--color-gray) blend(var(--color-white) 90%));
 }
 
 html,

@@ -9,7 +9,7 @@ const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
 const webpackConfig = require("./webpack.config");
 
-const appPath = path.resolve(__dirname, "./app/index.tsx");
+const appPath = path.resolve(__dirname, "./app");
 const sourcePath = path.resolve(__dirname, "../src");
 
 // HOOKS
@@ -22,6 +22,8 @@ require("ts-node").register({
 
 const app = express();
 
+app.use(express.static(path.resolve(__dirname, "../node_modules/sanity-web-styles/dist")));
+
 // WEBPACK
 const webpackCompiler = webpack(webpackConfig);
 app.use(
@@ -33,16 +35,37 @@ app.use(
 );
 app.use(webpackHotMiddleware(webpackCompiler));
 
+function encode(obj) {
+  return encodeURIComponent(JSON.stringify(obj));
+}
+
+// const highlightJsTheme = 'atom-one-light'
+const highlightJsTheme = "xcode";
+
 app.get("/*", (req, res) => {
-  const { App } = require(appPath);
-  const html = ReactDOMServer.renderToString(React.createElement(App));
-  res.send(`<!doctype html>
+  try {
+    const { App } = require("./app");
+    const props = { path: req.path, query: req.query };
+    const html = ReactDOMServer.renderToString(React.createElement(App, props));
+    res.send(`<!doctype html>
 <html>
+  <head>
+    <meta charset="utf-8">
+    <title>starter-react-components</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/${highlightJsTheme}.min.css">
+  </head>
   <body>
-    <div id="root">${html}</div>
+    <div id="root" data-props="${encode(props)}">${html}</div>
     <script src="/main.js"></script>
   </body>
 </html>`);
+  } catch (err) {
+    res.status(500);
+    res.send(err.stack);
+  }
 });
 
 app.listen(8080, err => {
@@ -65,15 +88,14 @@ sourceWatcher.on("ready", () => {
   sourceWatcher.on("all", () => {
     Object.keys(require.cache)
       .filter(key => key.startsWith(sourcePath))
-      .forEach(key => {
-        // console.log(key);
-        delete require.cache[key];
-      });
+      .forEach(key => delete require.cache[key]);
   });
 });
-const appWatcher = chokidar.watch([appPath]);
+const appWatcher = chokidar.watch(appPath);
 appWatcher.on("ready", () => {
   appWatcher.on("all", () => {
-    delete require.cache[appPath];
+    Object.keys(require.cache)
+      .filter(key => key.startsWith(appPath))
+      .forEach(key => delete require.cache[key]);
   });
 });
